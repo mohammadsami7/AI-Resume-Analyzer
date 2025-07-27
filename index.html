@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Resume Analyzer</title>
+    <!-- <style>
+       
+    </style> -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo-section">
+                    <h1>AI Resume Analyzer</h1>
+                    
+                </div>
+                <nav class="navbar">
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#feedback">Feedback</a></li>
+                        <li><a href="#login">Login</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Input Section -->
+            <section class="input-section">
+                <div class="input-grid">
+                    <div class="input-group">
+                        <label for="resume-input">Paste Your Resume</label>
+                        <div class="textarea-container">
+                            <textarea 
+                                id="resume-input" 
+                                placeholder="Copy and paste your resume content here. Include your experience, skills, education, and achievements..."
+                            ></textarea>
+                        </div>
+                        <div class="file-upload">
+                            <input type="file" id="resume-file" accept=".txt,.pdf">
+                            <button type="button" class="file-upload-btn" onclick="document.getElementById('resume-file').click()">
+                                📁 Or Upload File
+                            </button>
+                            <span class="file-name"></span>
+                        </div>
+                        <div class="word-count" id="resume-word-count">0 words</div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="job-input">Paste Job Description</label>
+                        <div class="textarea-container">
+                            <textarea 
+                                id="job-input" 
+                                placeholder="Copy and paste the job description here. Include required skills, qualifications, and responsibilities..."
+                            ></textarea>
+                        </div>
+                        <div class="file-upload">
+                            <input type="file" id="job-file" accept=".txt,.pdf">
+                            <button type="button" class="file-upload-btn" onclick="document.getElementById('job-file').click()">
+                                📁 Or Upload File
+                            </button>
+                            <span class="file-name"></span>
+                        </div>
+                        <div class="word-count" id="job-word-count">0 words</div>
+                    </div>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="action-controls">
+                    <button class="btn btn-primary" id="analyze-btn">
+                        <span class="spinner" id="spinner"></span>
+                        <span id="analyze-text">🔍 Analyze Resume</span>
+                    </button>
+                    <button class="btn btn-secondary" id="reset-btn">🔄 Reset</button>
+                    <div class="tooltip">
+                        <span style="font-size: 1.2rem;">ℹ️</span>
+                        <span class="tooltip-text">Uses NLP to evaluate your resume's keyword match and structure.</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Results Section -->
+            <section class="results-section" id="results-section">
+                <h2 class="results-title">📊 Results Overview</h2>
+                
+                <div class="results-grid">
+                    <!-- ATS Score Card -->
+                    <div class="result-card">
+                        <h3>🎯 ATS Score</h3>
+                        <div class="score-display" id="ats-score">0</div>
+                        <div class="progress-container">
+                            <div class="progress-bar" id="score-progress" style="width: 0%;">0%</div>
+                        </div>
+                    </div>
+
+                    <!-- Matched Keywords Card -->
+                    <div class="result-card">
+                        <h3>✅ Matched Keywords</h3>
+                        <div class="keyword-tags" id="matched-keywords">
+                            <!-- Keywords will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Missing Keywords Card -->
+                    <div class="result-card">
+                        <h3>❌ Missing Keywords</h3>
+                        <div class="keyword-tags" id="missing-keywords">
+                            <!-- Keywords will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Resume Insights Card -->
+                    <div class="result-card">
+                        <h3>📊 Resume Insights</h3>
+                        <ul class="insights-list" id="resume-insights">
+                            <!-- Insights will be populated here -->
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Actionable Feedback -->
+                <div class="result-card">
+                    <h3>🧠 Actionable Feedback Tips</h3>
+                    <ul class="feedback-list" id="feedback-tips">
+                        <!-- Feedback will be populated here -->
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Collapsible Panel -->
+            <div class="collapsible-panel">
+                <div class="collapsible-header" onclick="toggleCollapsible()">
+                    <span><strong>What is ATS and why does it matter?</strong></span>
+                    <span class="chevron" id="chevron">▼</span>
+                </div>
+                <div class="collapsible-content" id="collapsible-content">
+                    <p><strong>ATS (Applicant Tracking System)</strong> is software used by employers to filter and rank resumes before they reach human recruiters.</p>
+                    <br>
+                    <p><strong>Why it matters:</strong></p>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>Over 90% of large companies use ATS systems</li>
+                        <li>ATS scans for specific keywords from job descriptions</li>
+                        <li>Poor ATS compatibility can result in automatic rejection</li>
+                        <li>Proper formatting and keyword optimization increase your chances</li>
+                    </ul>
+                    <br>
+                    <p><strong>Tips for ATS optimization:</strong></p>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>Use standard section headings (Experience, Education, Skills)</li>
+                        <li>Include relevant keywords from the job description</li>
+                        <li>Use simple formatting and avoid complex layouts</li>
+                        <li>Save your resume as both PDF and Word formats</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <p>&copy; 2024 AI Resume Analyzer. All rights reserved.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#github">GitHub Repo</a>
+                    <a href="#contact">Contact</a>
+                    <a href="#terms">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toast-message">Analysis complete! 🎉</span>
+    </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
